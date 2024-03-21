@@ -47,11 +47,13 @@ header {
   font-size: 16px;
   border-radius: 5px;
   border: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 #submitBtn {
   margin: 20px;
   height: 40px;
   width: 120px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
   font-size: 16px;
   background-color: #222c4cc0;
   color: #fff;
@@ -85,7 +87,7 @@ header {
   width: 200px;
   margin: 10px;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add box shadow */
   color: #1b1b1b;
 }
 .card p {
@@ -128,6 +130,7 @@ header {
   margin-top: 20px;
   border-radius: 15px;
   border: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   background: rgb(226, 250, 255);
   background: linear-gradient(
     0deg,

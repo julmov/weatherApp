@@ -119,7 +119,88 @@ function displayWeatherInfo(weatherData) {
     const card = createCard(forecast, index, city); // Pass city to createCard function
     cardsContainer.appendChild(card);
   });
+
+async function displayCityPhoto(cityName) {
+  try {
+    const unsplashResponse = await fetch(
+      `https://api.unsplash.com/search/photos?page=1&query=${cityName}&client_id=6Zhb8bS8u-t064Jq4aCc7TcIaNYrpi3-pZtG1QywCPA`
+    );
+    const unsplashData = await unsplashResponse.json();
+    const photoUrl = unsplashData.results[0].urls.regular;
+
+    // Check if cityContainer already exists
+    let cityContainer = document.querySelector(".city-container");
+    if (cityContainer) {
+      cityContainer.innerHTML = ""; // Clear previous data
+    } else {
+      // Create a container for city photo and weather info if it doesn't exist
+      cityContainer = document.createElement("div");
+      cityContainer.classList.add("city-container");
+      document.body.appendChild(cityContainer);
+    }
+
+    // Create an image element for city photo
+    const cityPhoto = document.createElement("img");
+    cityPhoto.src = photoUrl;
+    cityPhoto.alt = `Photo of ${cityName}`;
+    cityPhoto.classList.add("city-photo");
+
+    // Create a div for weather info
+    const weatherInfo = document.createElement("div");
+    weatherInfo.classList.add("weather-info");
+
+    // Append weather info to the container
+    cityContainer.appendChild(cityPhoto);
+    cityContainer.appendChild(weatherInfo);
+
+    // Fetch weather data and display
+    const weatherData = await getWeatherData(cityName);
+    displayCityWeatherInfo(weatherData, weatherInfo);
+  } catch (error) {
+    console.error("Error fetching city photo:", error);
+  }
 }
+
+function displayCityWeatherInfo(weatherData, weatherInfoContainer) {
+  // Clear previous weather info
+  weatherInfoContainer.innerHTML = "";
+
+  const city = weatherData.city.name;
+  const forecasts = weatherData.list.slice(0, 1); // Only need current weather
+
+  forecasts.forEach((forecast) => {
+    const { main, weather } = forecast;
+    const { temp, humidity } = main;
+    const { description } = weather[0];
+
+    // Create elements for weather info
+    const cityDisplay = document.createElement("p");
+    cityDisplay.textContent = `${city}`;
+
+    const tempDisplay = document.createElement("p");
+    tempDisplay.textContent = `${Math.round(temp - 273.15)}°C`;
+    tempDisplay.style.fontSize = "32px";
+
+    const humidityDisplay = document.createElement("p");
+    humidityDisplay.textContent = `Humidity: ${humidity}%`;
+
+    const descDisplay = document.createElement("p");
+    descDisplay.textContent = `${description};`
+
+    const weatherEmoji = document.createElement("p");
+    weatherEmoji.classList.add("weatherEmoji");
+    weatherEmoji.style.fontSize = "38px";
+    weatherEmoji.textContent = getWeatherEmoji(description);
+
+    // Append weather info to container
+    weatherInfoContainer.appendChild(cityDisplay);
+    weatherInfoContainer.appendChild(tempDisplay);
+    weatherInfoContainer.appendChild(humidityDisplay);
+    weatherInfoContainer.appendChild(descDisplay);
+    weatherInfoContainer.appendChild(weatherEmoji);
+  });
+}
+
 
 const getWeatherEmoji = (description) => {
   if (typeof description !== "string") {
@@ -184,85 +265,6 @@ const displayError = (message) => {
   cardsContainer.textContent = "";
   cardsContainer.appendChild(errorDisplay);
 };
-
-async function displayCityPhoto(cityName) {
-  try {
-    const unsplashResponse = await fetch(
-      `https://api.unsplash.com/search/photos?page=1&query=${cityName}&client_id=6Zhb8bS8u-t064Jq4aCc7TcIaNYrpi3-pZtG1QywCPA`
-    );
-    const unsplashData = await unsplashResponse.json();
-    const photoUrl = unsplashData.results[0].urls.regular;
-
-    // Create a container for city photo and weather info
-    const cityContainer = document.createElement("div");
-    cityContainer.classList.add("city-container");
-
-    // Create an image element for city photo
-    const cityPhoto = document.createElement("img");
-    cityPhoto.src = photoUrl;
-    cityPhoto.alt = `Photo of ${cityName}`;
-    cityPhoto.classList.add("city-photo");
-
-
-    // Create a div for weather info
-    const weatherInfo = document.createElement("div");
-    weatherInfo.classList.add("weather-info");
-
-    // Append weather info to the container
-    cityContainer.appendChild(cityPhoto);
-    cityContainer.appendChild(weatherInfo);
-
-    // Append the container to the DOM
-    document.body.appendChild(cityContainer);
-
-    // Fetch weather data and display
-    const weatherData = await getWeatherData(cityName);
-    displayCityWeatherInfo(weatherData, weatherInfo);
-  } catch (error) {
-    console.error("Error fetching city photo:", error);
-  }
-}
-
-function displayCityWeatherInfo(weatherData, weatherInfoContainer) {
-  const city = weatherData.city.name;
-  const forecasts = weatherData.list.slice(0, 1); // Only need current weather
-
-  // Clear previous content
-  weatherInfoContainer.innerHTML = "";
-
-  forecasts.forEach((forecast) => {
-    const { main, weather } = forecast;
-    const { temp, humidity } = main;
-    const { description } = weather[0];
-
-    // Create elements for weather info
-    const cityDisplay = document.createElement("p");
-    cityDisplay.textContent = `${city}`;
-
-    const tempDisplay = document.createElement("p");
-    tempDisplay.textContent = `${Math.round(temp - 273.15)}°C`;
-    tempDisplay.style.fontSize = "32px";
-
-    const humidityDisplay = document.createElement("p");
-    humidityDisplay.textContent = `Humidity: ${humidity}%`;
-
-    const descDisplay = document.createElement("p");
-    descDisplay.textContent = `${description}`;
-
-    const weatherEmoji = document.createElement("p");
-    weatherEmoji.classList.add("weatherEmoji");
-    weatherEmoji.style.fontSize = "38px";
-    weatherEmoji.textContent = getWeatherEmoji(description);
-
-    // Append weather info to container
-    weatherInfoContainer.appendChild(cityDisplay);
-    weatherInfoContainer.appendChild(tempDisplay);
-    weatherInfoContainer.appendChild(humidityDisplay);
-    weatherInfoContainer.appendChild(descDisplay);
-    weatherInfoContainer.appendChild(weatherEmoji);
-  });
-}
-
 
 
 /*function createWeatherGraph(weatherData) {
