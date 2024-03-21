@@ -348,10 +348,10 @@ const myCnvas = (city) => {
 clearPreviousContent();
 const canvas = document.createElement('canvas');
 canvas.id = "myChart";
-canvas.width = 200;
-canvas.height = 100;
+canvas.width = 900;
+canvas.height = 200;
 
-containerCanvas.style.display = "block"; // Ensure the container is visible
+containerCanvas.style.display = "block"
 containerCanvas.style.width = "100%"; // Adjust width as needed
 containerCanvas.style.height = "200px";
 
@@ -401,4 +401,4 @@ const myChart = new Chart(ctx, {
     },
   },
 });
-}
+} 
