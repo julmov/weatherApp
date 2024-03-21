@@ -154,7 +154,8 @@ header {
   body {
     font-size: 14px;
      width: auto;
-     height: auto;
+     height: 100%;
+     background: none;
      background-color: #fff;
   }
   .container {
