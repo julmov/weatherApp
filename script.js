@@ -27,6 +27,8 @@ submitBtn.addEventListener("click", async function () {
       const weatherData = await getWeatherData(city);
       displayWeatherInfo(weatherData);
       displayCityPhoto(city);
+      myCnvas(city);
+
      // createWeatherGraph(weatherData);
     } catch (error) {
       console.error(error);
@@ -177,6 +179,7 @@ function displayCityWeatherInfo(weatherData, weatherInfoContainer) {
 
     // Create elements for weather info
     const cityDisplay = document.createElement("p");
+    cityDisplay.id = "cityBigCard"
     cityDisplay.textContent = `${city}`;
 
     const tempDisplay = document.createElement("p");
@@ -187,10 +190,10 @@ function displayCityWeatherInfo(weatherData, weatherInfoContainer) {
     humidityDisplay.textContent = `Humidity: ${humidity}%`;
 
     const descDisplay = document.createElement("p");
-    descDisplay.textContent = `${description};`
+    descDisplay.textContent = `Weather: ${description}`;
 
     const weatherEmoji = document.createElement("p");
-    weatherEmoji.classList.add("weatherEmoji");
+    weatherEmoji.classList.add("weatherPhotoEmoji");
     weatherEmoji.style.fontSize = "38px";
     weatherEmoji.textContent = getWeatherEmoji(description);
 
@@ -269,7 +272,7 @@ const displayError = (message) => {
 };
 
 
-/*function createWeatherGraph(weatherData) {
+function createWeatherGraph(weatherData) {
   const forecasts = weatherData.list.slice(0, 5);
   const dates = [];
   const temperatures = [];
@@ -331,4 +334,71 @@ const displayError = (message) => {
 function calculateAverage(arr) {
   const sum = arr.reduce((acc, curr) => acc + curr, 0);
   return Math.round(sum / arr.length);
-}*/
+}
+
+function clearPreviousContent() {
+  containerCanvas.innerHTML = "";
+}
+
+const containerCanvas = document.createElement("div");
+containerCanvas.id = "containerCanvas";
+document.body.appendChild(containerCanvas);
+
+const myCnvas = (city) => {
+clearPreviousContent();
+const canvas = document.createElement('canvas');
+canvas.id = "myChart";
+canvas.width = 200;
+canvas.height = 100;
+
+containerCanvas.style.display = "block"; // Ensure the container is visible
+containerCanvas.style.width = "100%"; // Adjust width as needed
+containerCanvas.style.height = "200px";
+
+
+containerCanvas.appendChild(canvas);
+// Initialize your chart using Chart.js
+const ctx = canvas.getContext('2d');
+const myChart = new Chart(ctx, {
+  type: "bar", // Example chart type
+  data: {
+    labels: [
+      "22.03.2024",
+      "23.03.2024",
+      "24.03.2024",
+      "25.03.2024",
+      "26.03.2024",
+    ],
+    datasets: [
+      {
+        label: "# of Votes",
+        data: [25, 20, 15, 10, 5, 0],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
+}

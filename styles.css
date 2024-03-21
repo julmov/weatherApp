@@ -17,6 +17,26 @@ body {
   );
 }
 
+#myChart {
+  width: 100px; /* Set the width to 300 pixels */
+  height: 70px; /* Set the height to 200 pixels */
+    margin-left: auto;
+  margin-right: auto;
+}
+
+#containerCanvas {
+  margin-left: auto;
+  margin-right: auto;
+  background: rgb(226, 250, 255);
+  background: linear-gradient(
+    0deg,
+    rgb(208, 233, 241) 0%,
+    rgba(94, 132, 214, 0.726) 100%
+  );
+  border-radius: 15px;
+
+}
+
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -121,9 +141,12 @@ header {
   width: 400px;
   height: 200px; /* Adjust the height as needed */
 }
-
+#cityBigCard {
+  margin-top: 30px;
+  font-size: 24px;
+}
 .city-container {
-  width: 60%;  
+  width: 60%;
   display: flex;
   flex-direction: row;
   margin-left: auto;
@@ -140,61 +163,65 @@ header {
   );
 }
 
-.city-container img{
-    margin: 30px;
-    border-radius: 15px;
+.city-container img {
+  margin: 30px;
+  border-radius: 15px;
 }
 
-.city-container p{
-    margin-top: 20px;
+.city-container p {
+  margin: 10px;
 }
 
 @media only screen and (max-width: 768px) {
- 
   body {
     font-size: 14px;
-     width: auto;
-     height: 100%;
-     background: none;
-     background-color: #fff;
+    width: auto;
+    height: 100%;
+    background: none;
+    background-color: #fff;
   }
   .container {
-   width: 100%;
-}
- #cityInput {
+    width: 100%;
+  }
+  #cityInput {
     width: calc(100% - 20px);
- }
-.cards-container{
+  }
+  .cards-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+  }
 
-.card {
+  .card {
     width: 90%;
-}
- .weatherForm{
-    width: 100%; 
- }
+  }
+  .weatherForm {
+    width: 100%;
+  }
 
- .city-photo {
-  display: flex;
+  .city-photo {
+    display: flex;
 
-  padding: 10px;
-  margin: 10px;
-  padding-right: 10px;
-  width: 100%;
-  height: auto; /* Adjust the height as needed */
-}
-.city-container{
+    padding: 10px;
+    margin: 10px;
+    padding-right: 10px;
+    width: 100%;
+    height: auto; /* Adjust the height as needed */
+  }
+  .city-container {
     width: 90%;
     margin-bottom: 30px;
-  
-}
-.city-container p{
+  }
+  .city-container p {
     display: none;
-}
-.city-container img{
+  }
+  .city-container img {
     margin: 0;
-}
+  }
+  #containerCanvas {
+    width: 100%;
+  }
+  #myChart {
+    width: 100%;
+  }
 }
