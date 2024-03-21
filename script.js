@@ -119,6 +119,8 @@ function displayWeatherInfo(weatherData) {
     const card = createCard(forecast, index, city); // Pass city to createCard function
     cardsContainer.appendChild(card);
   });
+}
+
 
 async function displayCityPhoto(cityName) {
   try {
